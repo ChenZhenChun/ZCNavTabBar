@@ -193,6 +193,10 @@
     }
 }
 
+- (UIButton *)getItemWithIndex:(NSInteger)index {
+    if (index<0||index>_itemArray.count-1) return nil;
+    return [_itemArray objectAtIndex:index];
+}
 
 - (void)scrollViewOffsetConfig {
     CGRect rc = [self.scrollView convertRect:self.bottomSlideLine.frame toView:self];

@@ -16,9 +16,9 @@
 @property (nonatomic,assign) NSInteger              currentPage;
 @property (nonatomic,assign) BOOL                   isRemoveUnVisible;//是否将屏幕外的controller从父视图移除，default NO
 
-@property (nonatomic,copy) NSMutableArray<UIViewController *>*(^childViews)();//一次性加载全部子控制器
+@property (nonatomic,copy) NSMutableArray<UIViewController *>*(^childViews)(void);//一次性加载全部子控制器
 @property (nonatomic,copy) UIViewController *(^gl_setCurrentVC)(NSInteger index);//根据索引加载控制器
-@property (nonatomic,copy) NSMutableArray<NSString *>*(^childViewsTitle)();
+@property (nonatomic,copy) NSMutableArray<NSString *>*(^childViewsTitle)(void);
 @property (nonatomic,copy) void(^itemClickBlock)(NSInteger itemIndex);
 @property (nonatomic,copy) void(^shouldRecognizeSimultaneouslyWhenContentOffsetX0Block)(BOOL flag);
 

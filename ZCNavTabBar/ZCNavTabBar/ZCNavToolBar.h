@@ -24,7 +24,7 @@
 @property (nonatomic,strong) UIImage            *maskRightImg;//右边的蒙版图片宽度50高度等于控件高度
 @property (nonatomic,readonly) UIScrollView     *scrollView;
 
-@property (nonatomic,copy) NSMutableArray*(^toolBarTitlesBlock)();//导航数据源
+@property (nonatomic,copy) NSMutableArray*(^toolBarTitlesBlock)(void);//导航数据源
 @property (nonatomic,copy) BOOL(^itemShouldResponseClickBlock)(NSInteger itemIndex);//item是否响应点击操作
 @property (nonatomic,copy) void(^itemClickBlock)(NSInteger itemIndex);//item点击
 
@@ -49,5 +49,13 @@
  @param fadeLength 褪色范围
  */
 - (void)applyGradientMaskForFadeLength:(CGFloat)fadeLength;
+
+/**
+ 根据索引获取item实例
+
+ @param index tab索引值
+ @return item
+ */
+- (UIButton *)getItemWithIndex:(NSInteger)index;
 
 @end

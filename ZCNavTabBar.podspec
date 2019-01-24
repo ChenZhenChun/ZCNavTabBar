@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
 s.name              = "ZCNavTabBar"
 
 #更新代码必须修改版本号
-s.version           = "0.0.1"
+s.version           = "0.0.2"
 s.summary           = "Multiple TAB switches for ios."
 s.description       = <<-DESC
 It is a ZCNavTabBar used on iOS, which implement by Objective-C.
