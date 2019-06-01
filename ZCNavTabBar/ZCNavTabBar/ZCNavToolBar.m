@@ -69,7 +69,14 @@
         self.itemCount = titleArray.count;
         CGFloat itemAmountW = 0.0;
         CGFloat extraMargin = 0.0;
-        for (NSString *title in titleArray) {
+        for (id obj in titleArray) {
+            NSString *title;
+            if ([obj isKindOfClass:[NSString class]]) {
+                title = obj;
+            }else if([obj isKindOfClass:[ZCTitleModel class]]) {
+                ZCTitleModel *model = obj;
+                title = model.title;
+            }
             CGFloat itemW = [title boundingRectWithSize:CGSizeMake(MAXFLOAT,toolViewH) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:self.tooBarTitleFont} context:nil].size.width+8;
             itemAmountW += itemW;
         }
@@ -80,14 +87,30 @@
         CGFloat x = 0.0;
         CGFloat preW = 0.0;//前一个按钮的宽度
         for (int i = 0; i<titleArray.count; i++) {
-            NSString *title = titleArray[i];
+            
             UIButton *item = [UIButton buttonWithType:UIButtonTypeCustom];
             item.backgroundColor = [UIColor clearColor];
-            [item setTitle:title forState:UIControlStateNormal];
             [item setTitleColor:self.unSeletedTitleColor forState:UIControlStateNormal];
             [item setTitleColor:self.seletedTitleColor forState:UIControlStateSelected];
             [item setTitleColor:self.seletedTitleColor forState:UIControlStateSelected|UIControlStateHighlighted];
             [item.titleLabel setFont:self.tooBarTitleFont];
+            item.titleLabel.numberOfLines = 0;
+            
+            id obj = titleArray[i];
+            NSString *title;
+            if ([obj isKindOfClass:[NSString class]]) {
+                title = obj;
+            }else if([obj isKindOfClass:[ZCTitleModel class]]) {
+                ZCTitleModel *model = obj;
+                title = model.title;
+                if (model.unSeletedTitleColor) {
+                    [item setTitleColor:model.unSeletedTitleColor forState:UIControlStateNormal];
+                    [item setTitleColor:model.unSeletedTitleColor forState:UIControlStateSelected];
+                     [item setTitleColor:model.unSeletedTitleColor forState:UIControlStateSelected|UIControlStateHighlighted];
+                }
+            }
+            
+            [item setTitle:title forState:UIControlStateNormal];
             item.tag = i;
             [item addTarget:self action:@selector(itemClickAction:) forControlEvents:UIControlEventTouchUpInside];
             
@@ -137,12 +160,20 @@
     }
     
     if (CGRectIsEmpty(self.bottomSlideLine.frame)) {
-        self.bottomSlideLine.frame = CGRectMake(item.center.x-nowW/2.0,toolViewH-2,nowW,2);
+        if (self.slideLineLocation == LineBottom) {
+            self.bottomSlideLine.frame = CGRectMake(item.center.x-nowW/2.0,toolViewH-2,nowW,2);
+        }else {
+            self.bottomSlideLine.frame = CGRectMake(item.center.x-nowW/2.0,2,nowW,2);
+        }
         [item.titleLabel setFont:self.seletedTitleFont];
         [self scrollViewOffsetConfig];
     }else {
         [UIView animateWithDuration:0.2 animations:^{
-            self.bottomSlideLine.frame = CGRectMake(item.center.x-nowW/2.0,toolViewH-2,nowW,2);
+            if (self.slideLineLocation == LineBottom) {
+                self.bottomSlideLine.frame = CGRectMake(item.center.x-nowW/2.0,toolViewH-2,nowW,2);
+            }else {
+                self.bottomSlideLine.frame = CGRectMake(item.center.x-nowW/2.0,2,nowW,2);
+            }
             [item.titleLabel setFont:self.seletedTitleFont];
             [_seletedItem.titleLabel setFont:self.tooBarTitleFont];
         }completion:^(BOOL finished) {
@@ -172,12 +203,20 @@
     }
     
     if (CGRectIsEmpty(self.bottomSlideLine.frame)) {
-        self.bottomSlideLine.frame = CGRectMake(item.center.x-nowW/2.0,toolViewH-2,nowW,2);
+        if (self.slideLineLocation == LineBottom) {
+            self.bottomSlideLine.frame = CGRectMake(item.center.x-nowW/2.0,toolViewH-2,nowW,2);
+        }else {
+            self.bottomSlideLine.frame = CGRectMake(item.center.x-nowW/2.0,2,nowW,2);
+        }
         [item.titleLabel setFont:self.seletedTitleFont];
         [self scrollViewOffsetConfig];
     }else {
         [UIView animateWithDuration:0.2 animations:^{
-            self.bottomSlideLine.frame = CGRectMake(item.center.x-nowW/2.0,toolViewH-2,nowW,2);
+            if (self.slideLineLocation == LineBottom) {
+                self.bottomSlideLine.frame = CGRectMake(item.center.x-nowW/2.0,toolViewH-2,nowW,2);
+            }else {
+                self.bottomSlideLine.frame = CGRectMake(item.center.x-nowW/2.0,2,nowW,2);
+            }
             [item.titleLabel setFont:self.seletedTitleFont];
             [_seletedItem.titleLabel setFont:self.tooBarTitleFont];
         }completion:^(BOOL finished) {

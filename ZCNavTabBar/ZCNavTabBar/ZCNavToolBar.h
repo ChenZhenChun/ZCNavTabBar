@@ -7,6 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ZCTitleModel.h"
+
+typedef enum : NSUInteger {
+    LineBottom,
+    LineUp,
+} SlideLineLocation;
 
 @interface ZCNavToolBar : UIView
 @property (nonatomic,assign) NSInteger          currentItemIndex;
@@ -18,6 +24,7 @@
 @property (nonatomic,assign) CGFloat            margin;
 @property (nonatomic,strong) UIColor            *seletedTitleColor;
 @property (nonatomic,strong) UIColor            *unSeletedTitleColor;
+@property (nonatomic,assign) SlideLineLocation  slideLineLocation;
 @property (nonatomic,strong) UIColor            *bottomSlideLineColor;
 @property (nonatomic,strong) UIColor            *bottomLineColor;
 @property (nonatomic,strong) UIImage            *maskLeftImg;//左边的蒙版图片宽度50高度等于控件高度
